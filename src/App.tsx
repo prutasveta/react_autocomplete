@@ -8,8 +8,8 @@ import debounce from 'lodash.debounce';
 
 export const App: React.FC = () => {
   const [people] = useState(peopleFromServer);
-  const [isFocused, setIsFoused] = useState(false);
-  const [seletedPerson, setSeletedPerson] = useState<Person | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [query, setQuery] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
 
@@ -20,21 +20,21 @@ export const App: React.FC = () => {
   const applyQuery = useCallback(debounce(setAppliedQuery, 300), []);
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSeletedPerson(null);
+    setSelectedPerson(null);
     setQuery(event.target.value);
     applyQuery(event.target.value);
   };
 
   const handleSelect = (person: Person) => {
-    setSeletedPerson(person);
+    setSelectedPerson(person);
   };
 
   return (
     <div className="container">
       <main className="section is-flex is-flex-direction-column">
         <h1 className="title" data-cy="title">
-          {seletedPerson
-            ? `${seletedPerson?.name} (${seletedPerson?.born} - ${seletedPerson?.died})`
+          {selectedPerson
+            ? `${selectedPerson?.name} (${selectedPerson?.born} - ${selectedPerson?.died})`
             : 'No selected person'}
           {}
         </h1>
@@ -47,8 +47,8 @@ export const App: React.FC = () => {
               className="input"
               data-cy="search-input"
               value={query}
-              onFocus={() => setIsFoused(true)}
-              onBlur={() => setIsFoused(false)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               onChange={handleQueryChange}
             />
           </div>
@@ -58,7 +58,7 @@ export const App: React.FC = () => {
               <PeopleList
                 people={filteredPeople}
                 onSelect={handleSelect}
-                key={seletedPerson?.name}
+                key={selectedPerson?.name}
               />
             )}
 
