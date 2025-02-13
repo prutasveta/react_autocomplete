@@ -5,11 +5,9 @@ import { PeopleList } from './components/PeopleList';
 import { Person } from './types/Person';
 
 import debounce from 'lodash.debounce';
-import { event } from 'cypress/types/jquery';
 
 export const App: React.FC = () => {
-  const [people, setPeople] = useState(peopleFromServer);
-  // const [people, setPeople] = useState<Person[]>(getPreparedPeople());
+  const [people] = useState(peopleFromServer);
   const [isFocused, setIsFoused] = useState(false);
   const [seletedPerson, setSeletedPerson] = useState<Person | null>(null);
   const [query, setQuery] = useState('');
@@ -27,9 +25,8 @@ export const App: React.FC = () => {
     applyQuery(event.target.value);
   };
 
-  const handleSelect = person => {
+  const handleSelect = (person: Person) => {
     setSeletedPerson(person);
-    // setQuery(person.name);
   };
 
   return (
